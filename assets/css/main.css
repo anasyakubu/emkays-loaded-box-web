@@ -210,12 +210,25 @@ h6 {
 /*--------------------------------------------------------------
 # Global Header
 --------------------------------------------------------------*/
+/*--------------------------------------------------------------
+# Header
+--------------------------------------------------------------*/
 .header {
-  color: var(--default-color);
-  background-color: var(--background-color);
+  position: fixed; /* stays at top */
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: transparent; /* default transparent */
   padding: 20px 0;
-  transition: all 0.5s;
+  transition: background-color 0.5s, box-shadow 0.5s;
   z-index: 997;
+   /* color: #fff !important; */
+}
+
+.header.scrolled {
+  background-color: var(--background-color); /* background on scroll */
+  color: var(--default-color);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* optional shadow */
 }
 
 .header .logo {
@@ -307,9 +320,10 @@ h6 {
     padding-right: 0;
   }
 
+  /* Default (transparent header) = WHITE links */
   .navmenu a,
   .navmenu a:focus {
-    color: var(--nav-color);
+    color: #fff;
     font-size: 15px;
     padding: 0 2px;
     font-family: var(--nav-font);
@@ -352,9 +366,10 @@ h6 {
   .navmenu li:hover>a,
   .navmenu .active,
   .navmenu .active:focus {
-    color: color-mix(in srgb, var(--nav-color) 80%, black 50%);
+    color: color-mix(in srgb, #fff 80%, black 30%);
   }
 
+  /* Dropdown */
   .navmenu .dropdown ul {
     margin: 0;
     padding: 10px 0;
@@ -412,15 +427,36 @@ h6 {
   }
 }
 
-/* Mobile Navigation */
+/* ✅ On scroll: make nav links DARK */
+.header.scrolled .navmenu a,
+.header.scrolled .navmenu a:focus {
+  color: var(--nav-color); /* usually dark/black */
+}
+
+.header.scrolled .navmenu li:hover>a,
+.header.scrolled .navmenu .active,
+.header.scrolled .navmenu .active:focus {
+  color: color-mix(in srgb, var(--nav-color) 80%, black 50%);
+}
+
+
+/*--------------------------------------------------------------
+# Mobile Navigation
+--------------------------------------------------------------*/
 @media (max-width: 1199px) {
+  /* Default: white when header is transparent */
   .mobile-nav-toggle {
-    color: var(--nav-color);
+    color: #fff;
     font-size: 28px;
     line-height: 0;
     margin-right: 10px;
     cursor: pointer;
     transition: color 0.3s;
+  }
+
+  /* When scrolled: dark/black */
+  .header.scrolled .mobile-nav-toggle {
+    color: var(--nav-color);
   }
 
   .navmenu {
@@ -537,6 +573,7 @@ h6 {
     display: block;
   }
 }
+
 
 /*--------------------------------------------------------------
 # Global Footer
@@ -787,16 +824,36 @@ section,
   padding: 60px 0;
   display: flex;
   align-items: center;
+  justify-content: center;
+
+  /* background image */
+  background: url("../img/background.jpg") no-repeat center center/cover;
 }
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5); /* dark overlay */
+  z-index: 1;
+}
+
+.hero > * {
+  position: relative;
+  z-index: 2; /* keeps text above overlay */
+}
+
+
 
 .hero h1 {
   margin: 0;
   font-size: 64px;
   font-weight: 700;
+  color: #fff;
 }
 
 .hero p {
-  color: color-mix(in srgb, var(--default-color), transparent 30%);
+color: #fff;
   margin: 5px 0 30px 0;
   font-size: 20px;
   font-weight: 400;
@@ -1022,8 +1079,9 @@ section,
 .stats {
   position: relative;
   padding: 120px 0;
+   background: url("../img/background.jpg") no-repeat center center/cover;
 }
-
+/* 
 .stats img {
   position: absolute;
   inset: 0;
@@ -1032,7 +1090,7 @@ section,
   height: 100%;
   object-fit: cover;
   z-index: 1;
-}
+} */
 
 .stats:before {
   content: "";
